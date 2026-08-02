@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package usuario;
+
+service UsuarioService {
+  // Unary: 1 request -> 1 response. El caso equivalente a un GET REST.
+  rpc GetUsuario (GetUsuarioRequest) returns (Usuario);
+
+  // Server streaming: 1 request -> N responses. Push continuo del servidor al cliente.
+  rpc WatchUsuarios (WatchUsuariosRequest) returns (stream Usuario);
+}
+
+message GetUsuarioRequest {
+  int32 id = 1;
+}
+
+message WatchUsuariosRequest {}
+
+message Usuario {
+  int32 id = 1;
+  string nombre = 2;
+  string email = 3;
+}

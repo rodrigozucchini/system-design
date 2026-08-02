@@ -1,0 +1,1 @@
+export const USUARIO_PACKAGE = 'USUARIO_PACKAGE';
