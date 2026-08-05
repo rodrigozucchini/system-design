@@ -1,13 +1,15 @@
 # GraphQL
 
-## Qué problema resuelve
+## Punto de partida: ¿quién decide la forma de la respuesta?
 
-GraphQL nace en Facebook (2012 interno, open source 2015) para resolver dos problemas concretos que REST tiene cuando el cliente es una app móvil o un frontend con necesidades de datos muy variables:
+Cualquier API tiene que resolver una pregunta implícita: cuando el cliente pide datos, ¿quién decide qué forma tiene la respuesta? En REST la respuesta es "el servidor, de antemano": quien diseña el endpoint `GET /usuarios/1` decide, una vez, qué campos vienen — y esa forma queda fija para todos los clientes que lo llamen, hoy y en el futuro.
 
-- **Over-fetching**: pedís `GET /usuarios/1` y el servidor te devuelve el usuario completo (email, dirección, preferencias, fecha de alta...) aunque la pantalla solo necesite el nombre y el avatar. Herramientas fijas, no elegís qué campos vienen.
-- **Under-fetching**: para armar una pantalla de perfil necesitás el usuario, sus posts y sus seguidores. Con REST eso son 3 requests (`/usuarios/1`, `/usuarios/1/posts`, `/usuarios/1/seguidores`), 3 round trips, cada uno con su propia latencia.
+Eso funciona mientras haya un solo tipo de cliente con necesidades estables. El problema aparece apenas hay varios consumidores con necesidades distintas — una app móvil que quiere lo mínimo para ahorrar datos, un dashboard web que quiere todo, un panel de admin que quiere campos que ningún otro usa. Con la forma fijada del lado servidor, eso se traduce en dos síntomas concretos:
 
-GraphQL ataca ambos con una idea central: **el cliente describe la forma exacta de los datos que necesita, en una sola request**, y el servidor devuelve exactamente eso — ni más ni menos.
+- **Over-fetching**: pedís `GET /usuarios/1` y el servidor te devuelve el usuario completo (email, dirección, preferencias, fecha de alta...) aunque la pantalla solo necesite el nombre y el avatar. La forma es una sola para todos los clientes, así que por diseño le sobra a la mayoría.
+- **Under-fetching**: para armar una pantalla de perfil necesitás el usuario, sus posts y sus seguidores. Si cada uno es un recurso separado, eso son 3 requests (`/usuarios/1`, `/usuarios/1/posts`, `/usuarios/1/seguidores`), 3 round trips, cada uno con su propia latencia — porque la forma de cada endpoint fue pensada recurso por recurso, no pantalla por pantalla.
+
+Los dos síntomas son la misma causa vista desde ángulos distintos: la forma de la respuesta está fijada en el lugar equivocado. GraphQL invierte esa decisión — **el cliente describe la forma exacta de los datos que necesita, en una sola request**, y el servidor devuelve exactamente eso — ni más ni menos.
 
 ```graphql
 # una sola request, exactamente los campos que la pantalla necesita

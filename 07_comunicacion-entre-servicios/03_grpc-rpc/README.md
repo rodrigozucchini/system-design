@@ -1,25 +1,30 @@
 # RPC y gRPC
 
-## RPC (Remote Procedure Call)
+## Punto de partida: la ilusión de una llamada local
 
-RPC es un **estilo** de comunicación entre servicios, no un protocolo específico. La idea central: llamar a una función que corre en otra máquina como si fuera una función local.
+Dos procesos corriendo en máquinas distintas no comparten memoria ni pueden saltar directamente al código del otro — la única forma real de comunicarse es mandarse bytes por una red y esperar una respuesta. Frente a eso hay dos caminos de diseño: exponer esa realidad tal cual es (armar una request, mandarla, parsear la response — el camino de REST) o **esconderla detrás de la sintaxis de una llamada a función común**, como si el código remoto estuviera ahí mismo. RPC es ese segundo camino:
 
 ```
 resultado = usuarioService.getUsuario(id)
 ```
 
-En lugar de pensar en términos de "hacer una request HTTP a `/usuarios/123`", en RPC pensás en términos de "invocar el método `getUsuario`". El cliente no construye URLs ni verbos HTTP; llama a un método, con parámetros tipados, y recibe una respuesta tipada.
+En lugar de pensar en términos de "hacer una request HTTP a `/usuarios/123`", en RPC pensás en términos de "invocar el método `getUsuario`". El cliente no construye URLs ni verbos HTTP; llama a un método, con parámetros tipados, y recibe una respuesta tipada — la red desaparece de la superficie del código, aunque siga estando ahí por debajo.
 
-Para que esto funcione, cliente y servidor necesitan un **contrato** compartido (qué métodos existen, qué parámetros reciben, qué devuelven) y algo que traduzca esa llamada "local" en tráfico de red real: eso se llama **stub** (del lado del cliente) y **skeleton** (del lado del servidor). El stub serializa los argumentos, los manda por la red, espera la respuesta y la deserializa — todo transparente para quien hizo la llamada.
+Para sostener esa ilusión hacen falta dos cosas. Primero, un **contrato** compartido de antemano (qué métodos existen, qué parámetros reciben, qué devuelven) — sin eso, el cliente no sabría qué "función" está invocando ni cómo interpretar la respuesta. Segundo, algo que traduzca esa llamada "local" en tráfico de red real: eso se llama **stub** (del lado del cliente) y **skeleton** (del lado del servidor). El stub serializa los argumentos, los manda por la red, espera la respuesta y la deserializa — todo transparente para quien hizo la llamada. Ese trabajo de traducción es exactamente lo que un framework RPC automatiza; sin él, cada equipo tendría que escribirlo a mano por cada método.
 
 RPC existe desde los 80 (Sun RPC, CORBA, Java RMI, SOAP...) mucho antes de REST. gRPC es la implementación moderna que ganó tracción en microservicios.
 
-## gRPC
+## gRPC: qué le falta a "RPC sobre HTTP/1.1 + JSON" para comunicación interna de alto rendimiento
 
-gRPC (**g**oogle **RPC**) es un framework RPC open source creado por Google, construido sobre dos piezas clave:
+Nada impide construir RPC sobre HTTP/1.1 con JSON — de hecho es una opción válida y común. gRPC parte de un caso de uso más exigente: llamadas **servicio a servicio, internas, en volumen alto**, donde cada milisegundo de latencia y cada byte de payload se multiplican por la cantidad de llamadas por segundo. Ahí, dos elecciones de REST/JSON que son razonables para una API pública empiezan a pesar:
 
-1. **HTTP/2** como protocolo de transporte (en vez de HTTP/1.1 como usa REST típicamente).
-2. **Protocol Buffers (protobuf)** como lenguaje de definición de interfaz (IDL) y formato de serialización binaria.
+- JSON es texto: legible, pero cada campo carga su propio nombre en el payload y hay que parsearlo carácter por carácter.
+- HTTP/1.1 es una request por vez por conexión (con pipelining limitado en la práctica): para N llamadas concurrentes al mismo servicio, hacen falta N conexiones o encolarlas.
+
+gRPC (**g**oogle **RPC**) responde a esas dos limitaciones con dos piezas concretas, no arbitrarias:
+
+1. **HTTP/2** como protocolo de transporte — multiplexa muchos streams sobre una sola conexión TCP, así que N llamadas concurrentes no necesitan N conexiones.
+2. **Protocol Buffers (protobuf)** como lenguaje de definición de interfaz (IDL) y formato de serialización binaria — el contrato define de antemano qué campos existen y en qué orden, así que el payload no necesita repetir los nombres de los campos.
 
 ### El contrato: archivos `.proto`
 
