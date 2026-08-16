@@ -1,15 +1,6 @@
 # Roadmap de System Design
 
-Guía de estudio armada a partir de dos fuentes:
-
-- [donnemartin/system-design-primer](https://github.com/donnemartin/system-design-primer)
-- [karanpratapsingh/system-design](https://github.com/karanpratapsingh/system-design)
-
-Numerado estilo carpeta (`00_`, `01_`, ...) para que coincida con la estructura de directorios del proyecto.
-
-Compilado: 2026-08-01.
-
----
+Guía de estudio armada:
 
 ## 00_fundamentos-y-vocabulario-base
 
@@ -43,7 +34,7 @@ Cache hit/miss, Invalidación (write-through/around/back), Eviction policies, Di
 
 ## 07_comunicacion-entre-servicios
 
-HTTP, REST, GraphQL, gRPC, RPC, WebSockets, Long polling, Server-Sent Events
+**HTTP**, **REST**, GraphQL, **gRPC**, **RPC**, **WebSockets**, Long polling, Server-Sent Events
 
 ## 08_arquitectura-de-aplicacion
 
@@ -57,29 +48,24 @@ Sin cobertura en los repos: Idempotencia, Heartbeat / health checks, Leader elec
 
 ## 10_seguridad
 
-OAuth 2.0, OIDC, SSO — se apoya en SSL/TLS de 01_networking
+**Auth0**, OAuth 2.0, OIDC, SSO — se apoya en SSL/TLS de 01_networking
 
 ## 11_infraestructura-y-operaciones
 
 Temas cubiertos: VMs y Containers
 
-Sin cobertura en los repos: Kubernetes / orquestación, CI/CD, Infraestructura como código, Observabilidad (logging, tracing, métricas), Chaos Engineering, Zero-downtime deployments, Cost optimization
+Kubernetes / orquestación, CI/CD, Infraestructura como código, Observabilidad (logging, tracing, métricas), Chaos Engineering, Zero-downtime deployments, Cost optimization
 
 ## 12_estructuras-y-tecnicas-especificas
 
 Temas cubiertos: Geohashing, Quadtrees
 
-Sin cobertura en los repos: Checksums / data integrity, Batch vs Stream processing (Lambda/Kappa), WebRTC
+Checksums / data integrity, Batch vs Stream processing (Lambda/Kappa), WebRTC
 
 ## 13_estimacion-y-practica
 
-Temas cubiertos: Back-of-the-envelope calculations, Latency numbers every programmer should know
-
-Sin cobertura en los repos: Testing de sistemas distribuidos
-
-## 14_casos-de-estudio
-
-URL Shortener, Pastebin, Web crawler, Instagram, Twitter, WhatsApp, Dropbox, Netflix, Uber
+Temas cubiertos: 
+Back-of-the-envelope calculations, Latency numbers every programmer should know, Testing de sistemas distribuidos
 
 ---
 
@@ -97,9 +83,4 @@ URL Shortener, Pastebin, Web crawler, Instagram, Twitter, WhatsApp, Dropbox, Net
 
 ### Casos de estudio con código (`case-studies/`)
 
-Los diseños de 14_casos-de-estudio se implementan por separado, con la parte más difícil de cada uno resuelta en código real:
-
-- `case-studies/00_rate-limiter`
-- `case-studies/01_url-shortener`
-- `case-studies/02_chat-app`
     
