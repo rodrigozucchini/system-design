@@ -8,7 +8,7 @@ Escalabilidad vertical/horizontal, Performance vs Scalability, Latencia vs Throu
 
 ## 01_networking
 
-IP (versiones/tipos), Modelo OSI, TCP, UDP, DNS, SSL/TLS/mTLS
+**IP (versiones/tipos)**, **Modelo OSI**, TCP, UDP, DNS, SSL/TLS/mTLS
 
 ## 02_entrega-de-trafico
 
