@@ -12,7 +12,7 @@ Escalabilidad vertical/horizontal, Performance vs Scalability, Latencia vs Throu
 
 ## 02_entrega-de-trafico
 
-Load Balancer (L4/L7, algoritmos), Clustering, Forward Proxy, Reverse Proxy, CDN (push/pull)
+**Load Balancer** (L4/L7, algoritmos), Clustering, Forward Proxy, Reverse Proxy, CDN (push/pull)
 
 ## 03_consistencia-y-disponibilidad-distribuida
 
@@ -20,9 +20,7 @@ CAP Theorem, PACELC Theorem, ACID, BASE, Consistency patterns (weak/eventual/str
 
 ## 04_bases-de-datos
 
-Temas cubiertos: SQL vs NoSQL (document, key-value, graph, wide column, time series), Índices (dense/sparse), Normalización/Denormalización, Replicación (master-slave/master-master), Sharding, Federation, SQL tuning, Transacciones distribuidas (2PC/3PC)
-
-Sin cobertura en los repos: Consistent Hashing
+SQL vs NoSQL (document, key-value, graph, wide column, time series), Índices (dense/sparse), Normalización/Denormalización, Replicación (master-slave/master-master), Sharding, Federation, SQL tuning, Transacciones distribuidas (2PC/3PC), Consistent Hashing
 
 ## 05_storage
 
@@ -30,7 +28,7 @@ RAID, Volúmenes, File storage, Block storage, Object storage, NAS, HDFS
 
 ## 06_cache
 
-Cache hit/miss, Invalidación (write-through/around/back), Eviction policies, Distributed cache, Global cache, Caching por capa (cliente, CDN, DB, app)
+Cache hit/miss, *Invalidación (write-through/around/back)*, Eviction policies, Distributed cache, Global cache, Caching por capa (cliente, CDN, DB, app)
 
 ## 07_comunicacion-entre-servicios
 
@@ -42,9 +40,7 @@ N-tier architecture, Monolitos vs Microservicios, API Gateway, Service Discovery
 
 ## 09_confiabilidad-y-resiliencia
 
-Temas cubiertos: Circuit Breaker, Rate Limiting, Disaster Recovery
-
-Sin cobertura en los repos: Idempotencia, Heartbeat / health checks, Leader election, Algoritmos de consenso (Raft, Paxos), Distributed Locking
+Circuit Breaker, **Rate Limiting**, Disaster Recovery, Idempotencia, Heartbeat / health checks, Leader election, Algoritmos de consenso (Raft, Paxos), Distributed Locking
 
 ## 10_seguridad
 
@@ -58,16 +54,11 @@ Kubernetes / orquestación, CI/CD, Infraestructura como código, Observabilidad 
 
 ## 12_estructuras-y-tecnicas-especificas
 
-Temas cubiertos: Geohashing, Quadtrees
-
-Checksums / data integrity, Batch vs Stream processing (Lambda/Kappa), WebRTC
+Geohashing, Quadtrees, Checksums / data integrity, Batch vs Stream processing (Lambda/Kappa), WebRTC
 
 ## 13_estimacion-y-practica
 
-Temas cubiertos: 
 Back-of-the-envelope calculations, Latency numbers every programmer should know, Testing de sistemas distribuidos
-
----
 
 ### Por qué este orden
 
